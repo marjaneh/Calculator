@@ -58,16 +58,43 @@ var Key = function(){
     }
 }
 
-var DigitKey = function(digitValue){
+var DigitKey = function(){
     var Self =this;
-    Self.digitValue = digitValue;
+    Self.GetValue = function(){
+        return Self.Value;
+    }
+    Self.SetValue = function(value){
+        Self.Value = value;
+    }
+}
+
+var OperatorKey = function(){
+    var Self = this;
+    Self.GetOperator = function(){
+        return Self.Operator;
+    }
+    Self.SetOperator = function(operator){
+        Self.Operator = operator;
+    }
+}
+
+var ControllerKey = function(){
+    var Self = this;
+    Self.GetController = function(){
+        return Self.Controller;
+    }
+    Self.SetController = function(controller){
+        Self.Controller = controller;
+    }
 }
 
 DigitKey.prototype = Object.create(Key.prototype);
+OperationKey.prototype = Object.create(key.prototype);
+ControllerKey.prototype = Object.create(key.prototype);
 
 
-var myDigitKey = new DigitKey();
-myDigitKey.Keypress();
+// var myDigitKey = new DigitKey();
+// myDigitKey.Keypress();
 
 var Keypad = function(keys){
     var Self =this;
