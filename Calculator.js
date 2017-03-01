@@ -11,6 +11,7 @@ var Calculator = function (screen, keypad, options) {
         
     };
     Self.ExtendToAdvance = function () {
+        
     };
 }
 
@@ -153,8 +154,6 @@ var ClearKey = function(){
 
 ControllerKey.prototype = new Key();
 ClearKey.prototype = new ControllerKey();
-
-
 
 // var myDigitKey = new DigitKey();
 // myDigitKey.Keypress();
