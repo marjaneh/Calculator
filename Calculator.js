@@ -5,13 +5,17 @@
  */
 "use strict"
 
+var extendObj = function(childObj, parentObj) {
+    childObj.prototype = parentObj.prototype;
+};
+
 var Calculator = function (screen, keypad, options) {
     var Self = this;
     Self.Init = function () {
         
     };
     Self.ExtendToAdvance = function () {
-        
+
     };
 }
 
@@ -151,6 +155,7 @@ var ClearKey = function(){
     }
           
 }
+
 
 ControllerKey.prototype = new Key();
 ClearKey.prototype = new ControllerKey();
