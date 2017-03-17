@@ -38,10 +38,10 @@ var Screen = function(){
         $('#screen').html(0);
     };
     Self.DisplayNumber = function(){
-        $('#screen').html();
+        $('#screen').html(Self.GetCurrentStatement());
     };
     Self.GetCurrentStatement = function(){
-        
+        return Self.CurrentStatement; 
     };
     Self.SetCurrentStatement= function(currentStatement){
         Self.CurrentStatement = currentStatement;
@@ -94,6 +94,8 @@ var Cell = function(){
 var Key = function(){
     var Self = this;
     Self.DomObject;
+    Self.Click_CallBack;
+
     Self.GetType = function(){
         return Self.Type;
     };
@@ -106,9 +108,13 @@ var Key = function(){
     Self.SetDomObject = function(domObject){
         Self.DomObject = domObject;
     };
-    Self.Press = function(callback){
-        $(Self.DomObject).on('click', callback);
+    Self.SetClickCallBack = function(callback){
+        Self.Click_CallBack = callback;
+        _addListeners(Self.Click_CallBack);
     };
+    var _addListeners = function(callback){
+        $(Self.DomObject).on('click', callback);
+    }
 }
 
 var DigitKey = function(){
@@ -120,6 +126,18 @@ var DigitKey = function(){
     Self.SetValue = function(value){
         Self.Value = value;
     };
+    Self.SetTargetObject= function(targetObject){
+        Self.TargetObject = targetObject
+    };
+    Self.GetTargetObject = function(){
+        return Self.TargetObject;
+    };
+    // Self.Active = function(){
+    //     Self.Press(function(){
+    //         Self.GetTargetObject().SetCurrentStatement(Self.GetDomObject().val());
+    //         Self.GetTargetObject().DisplayNumber();
+    //     });  
+    // }
 }
 
 var OperatorKey = function(){
@@ -146,12 +164,12 @@ var ClearKey = function(){
         return Self.TargetObject;
     };
     Self.Active = function(){
-        Self.Press(function(){
-        if(Self.GetTargetObject().GetFlag())
-            Self.GetTargetObject().LightOff();
-        else
-            Self.GetTargetObject().LightOn();
-        });  
+        // Self.Press(function(){
+        // if(Self.GetTargetObject().GetFlag())
+        //     Self.GetTargetObject().LightOff();
+        // else
+        //     Self.GetTargetObject().LightOn();
+        // });  
     }
           
 }
@@ -159,6 +177,7 @@ var ClearKey = function(){
 
 ControllerKey.prototype = new Key();
 ClearKey.prototype = new ControllerKey();
+DigitKey.prototype = new Key();
 
 // var myDigitKey = new DigitKey();
 // myDigitKey.Keypress();
@@ -182,5 +201,16 @@ var c_key = new ClearKey();
 c_key.SetDomObject($('.clear'));
 c_key.SetTargetObject(screen_panel);
 c_key.Active();
+
+
+var d_key = new DigitKey();
+d_key.SetDomObject($('.digit'));
+d_key.SetTargetObject(screen_panel);
+d_key.SetValue(d_key.GetDomObject().html());
+d_key.SetClickCallBack(function(){
+    alert(d_key.GetValue() + "clicked")
+});
+// d_key.Active();
+
 
 
