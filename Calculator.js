@@ -93,8 +93,9 @@ var Cell = function(){
 
 var Key = function(){
     var Self = this;
-    Self.DomObject;
-    Self.Click_CallBack;
+    Self.DisplayObject; //keeps screeen object
+    var DomObject;
+    var Click_CallBack;
 
     Self.GetType = function(){
         return Self.Type;
@@ -103,18 +104,25 @@ var Key = function(){
         Self.Type = type;
     };
     Self.GetDomObject = function(){
-        return Self.DomObject;
+        return DomObject;
     };
     Self.SetDomObject = function(domObject){
-        Self.DomObject = domObject;
+        DomObject = domObject;
     };
     Self.SetClickCallBack = function(callback){
-        Self.Click_CallBack = callback;
-        _addListeners(Self.Click_CallBack);
+        Click_CallBack = callback;
+        _addListeners(Click_CallBack);
     };
     var _addListeners = function(callback){
         $(Self.DomObject).on('click', callback);
-    }
+    };
+    var _displayHandlerAttacher = function(){
+        Self.SetClickCallBack(function(){
+            var keyValue = Self.GetDomObject().text();
+            Self.DisplayObject.DisplayNumber();
+        })
+    };
+    _displayHandlerAttacher();
 }
 
 var DigitKey = function(){
@@ -208,7 +216,7 @@ d_key.SetDomObject($('.digit'));
 d_key.SetTargetObject(screen_panel);
 d_key.SetValue(d_key.GetDomObject().html());
 d_key.SetClickCallBack(function(){
-    alert(d_key.GetValue() + "clicked")
+    alert(d_key.GetValue() + "clicked");
 });
 // d_key.Active();
 
