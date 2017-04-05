@@ -91,43 +91,33 @@ var Cell = function(){
     };
 }
 
-var Key = function(){
+var Key = function(_domObject, _screenObject){
     var Self = this;
-    Self.DisplayObject; //keeps screeen object
-    var DomObject;
-    var Click_CallBack;
-
-    Self.GetType = function(){
-        return Self.Type;
-    };
-    Self.SetType = function(type){
-        Self.Type = type;
-    };
+    var ScreenObject = _screenObject; //keeps screeen object
+    var DomObject = _domObject;
+    
+    // var _attachEventHandlers = function(){
+    //     DomObject.on('click', function(e){
+    //         var keyValue = $(this).html();
+    //         ScreenObject.SetCurrentStatement(keyValue);
+    //         ScreenObject.DisplayNumber();
+    //     });
+    // };
+    // _attachEventHandlers();
     Self.GetDomObject = function(){
         return DomObject;
     };
     Self.SetDomObject = function(domObject){
         DomObject = domObject;
     };
-    Self.SetClickCallBack = function(callback){
-        Click_CallBack = callback;
-        _addListeners(Click_CallBack);
+    Self.SetScreenObject = function(screenObject){
+        ScreenObject = screenObject;
     };
-    var _addListeners = function(callback){
-        $(Self.DomObject).on('click', callback);
-    };
-    var _displayHandlerAttacher = function(){
-        Self.SetClickCallBack(function(){
-            var keyValue = Self.GetDomObject().text();
-            Self.DisplayObject.DisplayNumber();
-        })
-    };
-    _displayHandlerAttacher();
 }
 
-var DigitKey = function(){
+var DigitKey = function(_domObject, _screenObject){
     var Self =this;
-    
+    // Self.
     Self.GetValue = function(){
         return Self.Value;
     };
@@ -204,21 +194,20 @@ var Keypad = function(keys){
 // var myKey =new Key();
 // var myKeypad = new Keypad([myKey]);
 // myKeypad.Init();
-var screen_panel = new Screen();
-var c_key = new ClearKey();
-c_key.SetDomObject($('.clear'));
-c_key.SetTargetObject(screen_panel);
-c_key.Active();
+// var screen_panel = new Screen();
+// var c_key = new ClearKey();
+// c_key.SetDomObject($('.clear'));
+// c_key.SetTargetObject(screen_panel);
+// c_key.Active();
 
 
 var d_key = new DigitKey();
-d_key.SetDomObject($('.digit'));
-d_key.SetTargetObject(screen_panel);
-d_key.SetValue(d_key.GetDomObject().html());
-d_key.SetClickCallBack(function(){
-    alert(d_key.GetValue() + "clicked");
-});
-// d_key.Active();
+
+d_key.SetDomObject($('.keys span'));
+d_key.SetDisplayObject(screen_panel);
+d_key.Active();
+
+
 
 
 
